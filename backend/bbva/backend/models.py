@@ -65,7 +65,7 @@ class Servicio(models.Model):
         return self.nombre
 
 class Recibo(models.Model):
-    id_cuenta = models.IntegerField(primary_key=True)
+    id_cuenta = models.AutoField(primary_key=True)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     id_servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     monto = models.DecimalField(decimal_places=2, max_digits=8)

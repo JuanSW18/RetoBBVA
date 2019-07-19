@@ -41,13 +41,14 @@ def get_list_cuentas_bancarias(request, id_usuario):
     except m.Cliente.DoesNotExist:
         return Response('ID DE USUARIO NO EXISTE', content_type='application/json')
 
+
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
-def lista_cuentas(request, dni):
+def listar_recibos(request, id_usuario):
     try:
-        cliente = m.Cliente.objects.get(dni=dni)
-        lista = m.Recibo.objects.filter(id_cliente=cliente)
+        cliente = m.Cliente.objects.get(id_usuario=id_usuario)
+        lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido')
         response = s.ReciboSerializer(lista, many=True)
         return Response(response.data, content_type='application/json')
     except m.Cliente.DoesNotExist:
-        return Response('DNI NO REGISTRADO', content_type='application/json')
+        return Response('ID NO REGISTRADO', content_type='application/json')
