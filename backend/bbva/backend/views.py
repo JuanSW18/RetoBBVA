@@ -93,6 +93,8 @@ def pagar_servicio(request):
         cuenta_bancaria = m.CuentaBancaria.objects.get(id_cuenta_bancaria=id_cuenta_bancaria)
         cuenta_bancaria.saldo = cuenta_bancaria.saldo - recibo.monto
         cuenta_bancaria.save()
+        recibo.estado = 'Pagado'
+        recibo.save()
         return Response('Recibo pagado!', content_type='application/json')
     except m.Recibo.DoesNotExist or m.CuentaBancaria.DoesNotExist:
         return Response('ERROR!', content_type='application/json')
