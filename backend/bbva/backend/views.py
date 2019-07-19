@@ -59,6 +59,7 @@ def get_list_cuentas_bancarias(request, id_usuario):
 def listar_recibos(request):
     id_usuario = request.POST.get('id_usuario')
     nombre_servicio = request.POST.get('nombre_servicio')
+    print(request.POST)
     try:
         cliente = m.Cliente.objects.get(id_usuario=id_usuario)
         lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido',
