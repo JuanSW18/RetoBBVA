@@ -22,7 +22,7 @@ class Servicio(models.Model):
     class Meta:
         db_table = 'servicio'
     def __str__(self):
-        return self.nombres
+        return self.nombre
 
 class Cuenta(models.Model):
     id_cuenta = models.IntegerField(primary_key=True)
