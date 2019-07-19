@@ -90,9 +90,11 @@ def lista_proveedores(request):
 def lista_proveedores2(request, nombre_servicio):
     servicios = m.Servicio.objects.filter(nombre=nombre_servicio)
     lista_servicios = list(servicios)
-    lista_proveedores = {}
+    lista_proveedores = []
     for servicio in lista_servicios:
-        lista_proveedores[servicio.id_proveedor_id] = servicio.id_proveedor.nombre_proveedor
+        dic = {}
+        dic[servicio.id_proveedor_id] = servicio.id_proveedor.nombre_proveedor
+        lista_proveedores.append(dic)
     return Response(lista_proveedores, content_type='application/json')
 
 
