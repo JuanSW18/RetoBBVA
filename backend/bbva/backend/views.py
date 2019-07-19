@@ -95,8 +95,7 @@ def lista_proveedores2(request, nombre_servicio):
         dic = {}
         dic[servicio.id_proveedor_id] = servicio.id_proveedor.nombre_proveedor
         lista_proveedores.append(dic)
-    json_p = json.dumps(lista_proveedores)
-    return Response(json_p, content_type='application/json')
+    return Response(lista_proveedores, content_type='application/json')
 
 
 @api_view(['POST'])
