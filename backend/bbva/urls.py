@@ -25,4 +25,6 @@ urlpatterns = [
     path('recibos/<int:id_usuario>', views.listar_recibos),
     path('servicios', views.lista_servicios),
     path('proveedores', views.lista_proveedores),
+    path('proveedores_2/<str:nombre_servicio>', views.lista_proveedores2),
+    path('pagar_servicio', views.pagar_servicio),
 ]

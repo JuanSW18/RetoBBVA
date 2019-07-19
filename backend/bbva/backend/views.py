@@ -59,6 +59,7 @@ def get_list_cuentas_bancarias(request, id_usuario):
 def listar_recibos(request, id_usuario):
     try:
         cliente = m.Cliente.objects.get(id_usuario=id_usuario)
+        # agregar id de servicio
         lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido')
         response = s.ReciboSerializer(lista, many=True)
         return Response(response.data, content_type='application/json')
@@ -74,13 +75,23 @@ def lista_servicios(request):
     return Response(response.data, content_type='application/json')
 
 
-
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def lista_proveedores(request):
     proveedores = m.Proveedor.objects.all()
     response = s.ProveedorSerializer(proveedores, many=True)
     return Response(response.data, content_type='application/json')
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def lista_proveedores2(request, nombre_servicio):
+    servicios = m.Servicio.objects.filter(nombre=nombre_servicio)
+    lista_servicios = list(servicios)
+    lista_proveedores = {}
+    for servicio in lista_servicios:
+        lista_proveedores[servicio.id_proveedor_id] = servicio.id_proveedor.nombre_proveedor
+    return Response(lista_proveedores, content_type='application/json')
 
 
 @api_view(['POST'])
