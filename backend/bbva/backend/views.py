@@ -23,3 +23,6 @@ def lista_cuentas(request, dni):
         return Response(response.data, content_type='application/json')
     except m.Cliente.DoesNotExist:
         return Response('DNI NO REGISTRADO', content_type='application/json')
+
+
+
