@@ -19,5 +19,6 @@ from bbva.backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path('lista_cuentas/<int:dni>', views.lista_cuentas)
 ]
