@@ -14,9 +14,9 @@ def index(request):
     return Response('Hola mundo')
 
 
-@api_view(['POST'])
+"""@api_view(['POST'])
 @renderer_classes((JSONRenderer,))
-def login(request):
+def login_post(request):
     serializer = s.UsuarioSerializer(data=request.data)
     if serializer.is_valid():
         usuario = serializer.data['usuario']
@@ -27,8 +27,20 @@ def login(request):
         except m.UsuarioBBVA.DoesNotExist:
             return Response('USUARIO Y/O CONTRASEÑA INCORRECTOS', content_type='application/json')
     else:
-        return Response('ERROR', content_type='application/json')
+        return Response('ERROR', content_type='application/json')"""
 
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def login(request):
+    #usuario = request.data['usuario']
+    #password = request.data['password']
+    print(request.data)
+    try:
+        #user = m.UsuarioBBVA.objects.get(usuario=usuario, password=password)
+        return Response('Bienvenido', content_type='application/json')
+    except m.UsuarioBBVA.DoesNotExist:
+        return Response('USUARIO Y/O CONTRASEÑA INCORRECTOS', content_type='application/json')
 
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
