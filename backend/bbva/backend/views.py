@@ -105,8 +105,8 @@ def lista_proveedores2(request, nombre_servicio):
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
 def pagar_servicio(request):
-    id_recibo = request.POST.get['id_recibo']
-    id_cuenta_bancaria = request.POST.get['id_cuenta_bancaria']
+    id_recibo = request.data['id_recibo']
+    id_cuenta_bancaria = request.data['id_cuenta_bancaria']
     try:
         recibo = m.Recibo.objects.get(id_recibo=id_recibo)
         cuenta_bancaria = m.CuentaBancaria.objects.get(id_cuenta_bancaria=id_cuenta_bancaria)
