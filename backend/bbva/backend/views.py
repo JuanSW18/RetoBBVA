@@ -64,3 +64,19 @@ def listar_recibos(request, id_usuario):
         return Response(response.data, content_type='application/json')
     except m.Cliente.DoesNotExist:
         return Response('ID NO REGISTRADO', content_type='application/json')
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def lista_servicios(request):
+    servicios = m.Servicio.objects.all()
+    response = s.ServicioSerializer(servicios, many=True)
+    return Response(response.data, content_type='application/json')
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def lista_proveedores(request):
+    proveedores = m.Proveedor.objects.all()
+    response = s.ProveedorSerializer(proveedores, many=True)
+    return Response(response.data, content_type='application/json')

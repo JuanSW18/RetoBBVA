@@ -55,7 +55,7 @@ class Proveedor(models.Model):
 
 class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
-    id_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    id_proveedor = models.ManyToManyField(Proveedor, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=25)
 
     class Meta:
