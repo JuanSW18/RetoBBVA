@@ -57,8 +57,11 @@ def get_list_cuentas_bancarias(request, id_usuario):
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
 def listar_recibos(request):
-    id_usuario = request.POST.get('id_usuario')
-    nombre_servicio = request.POST.get('nombre_servicio')
+    print(request.data)
+    #id_usuario = request.POST.get('id_usuario')
+    #nombre_servicio = request.POST.get('nombre_servicio')
+    id_usuario = request.data['id_usuario']
+    nombre_servicio = request.data['nombre_servicio']
     print(request.POST)
     try:
         cliente = m.Cliente.objects.get(id_usuario=id_usuario)
