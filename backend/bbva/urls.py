@@ -22,7 +22,7 @@ urlpatterns = [
     path('', views.index),
     path('login', views.login),
     path('cuentas_bancarias/<int:id_usuario>', views.get_list_cuentas_bancarias),
-    path('recibos/<int:id_usuario>', views.listar_recibos),
+    path('recibos', views.listar_recibos),
     path('servicios', views.lista_servicios),
     path('proveedores', views.lista_proveedores),
     path('proveedores_2/<str:nombre_servicio>', views.lista_proveedores2),

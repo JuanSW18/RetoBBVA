@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from bbva.backend import models as m
 from bbva.backend import serializers as s
-
+import json
 # Create your views here.
 
 @api_view(['GET'])
@@ -54,15 +54,15 @@ def get_list_cuentas_bancarias(request, id_usuario):
         return Response('ID DE USUARIO NO EXISTE', content_type='application/json')
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @renderer_classes((JSONRenderer,))
 def listar_recibos(request):
-    id_usuario = request.data['id_recibo']
-    id_servicio = request.data['id_servicio']
+    id_usuario = request.POST.get('id_usuario')
+    nombre_servicio = request.POST.get('nombre_servicio')
     try:
         cliente = m.Cliente.objects.get(id_usuario=id_usuario)
-        # agregar id de servicio
-        lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido', id_servicio=id_servicio)
+        lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido',
+                                        id_servicio__nombre=nombre_servicio)
         response = s.ReciboSerializer(lista, many=True)
         return Response(response.data, content_type='application/json')
     except m.Cliente.DoesNotExist:
@@ -95,14 +95,15 @@ def lista_proveedores2(request, nombre_servicio):
         dic = {}
         dic[servicio.id_proveedor_id] = servicio.id_proveedor.nombre_proveedor
         lista_proveedores.append(dic)
-    return Response(lista_proveedores, content_type='application/json')
+    json_p = json.dumps(lista_proveedores)
+    return Response(json_p, content_type='application/json')
 
 
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
 def pagar_servicio(request):
-    id_recibo = request.data['id_recibo']
-    id_cuenta_bancaria = request.data['id_cuenta_bancaria']
+    id_recibo = request.POST.get['id_recibo']
+    id_cuenta_bancaria = request.POST.get['id_cuenta_bancaria']
     try:
         recibo = m.Recibo.objects.get(id_recibo=id_recibo)
         cuenta_bancaria = m.CuentaBancaria.objects.get(id_cuenta_bancaria=id_cuenta_bancaria)
