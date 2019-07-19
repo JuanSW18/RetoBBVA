@@ -55,7 +55,7 @@ class Proveedor(models.Model):
 
 class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
-    id_proveedor = models.ManyToManyField(Proveedor, on_delete=models.CASCADE)
+    id_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=25)
 
     class Meta:
@@ -70,9 +70,9 @@ class Recibo(models.Model):
     id_servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     monto = models.DecimalField(decimal_places=2, max_digits=8)
     ESTADOS = [
-        (1, 'Pagado'),
-        (2, 'No Pagado'),
-        (3, 'Vencido'),
+        ('Pagado', 'Pagado'),
+        ('No Pagado', 'No Pagado'),
+        ('Vencido', 'Vencido'),
         ]
     estado = models.CharField(max_length=15,choices = ESTADOS)
     fecha_vencimiento = models.DateField()
