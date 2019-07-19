@@ -56,11 +56,13 @@ def get_list_cuentas_bancarias(request, id_usuario):
 
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
-def listar_recibos(request, id_usuario):
+def listar_recibos(request):
+    id_usuario = request.data['id_recibo']
+    id_servicio = request.data['id_servicio']
     try:
         cliente = m.Cliente.objects.get(id_usuario=id_usuario)
         # agregar id de servicio
-        lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido')
+        lista = m.Recibo.objects.filter(id_cliente=cliente, estado='No Pagado' or 'Vencido', id_servicio=id_servicio)
         response = s.ReciboSerializer(lista, many=True)
         return Response(response.data, content_type='application/json')
     except m.Cliente.DoesNotExist:
