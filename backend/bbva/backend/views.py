@@ -74,9 +74,25 @@ def lista_servicios(request):
     return Response(response.data, content_type='application/json')
 
 
+
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def lista_proveedores(request):
     proveedores = m.Proveedor.objects.all()
     response = s.ProveedorSerializer(proveedores, many=True)
     return Response(response.data, content_type='application/json')
+
+
+@api_view(['POST'])
+@renderer_classes((JSONRenderer,))
+def pagar_servicio(request):
+    id_recibo = request.data['id_recibo']
+    id_cuenta_bancaria = request.data['id_cuenta_bancaria']
+    try:
+        recibo = m.Recibo.objects.get(id_recibo=id_recibo)
+        cuenta_bancaria = m.CuentaBancaria.objects.get(id_cuenta_bancaria=id_cuenta_bancaria)
+        cuenta_bancaria.saldo = cuenta_bancaria.saldo - recibo.monto
+        cuenta_bancaria.save()
+        return Response('Recibo pagado!', content_type='application/json')
+    except m.Recibo.DoesNotExist or m.CuentaBancaria.DoesNotExist:
+        return Response('ERROR!', content_type='application/json')
