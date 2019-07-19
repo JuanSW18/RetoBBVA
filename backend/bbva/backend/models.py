@@ -12,7 +12,8 @@ class Cliente(models.Model):
 
     class Meta:
         db_table = 'cliente'
-
+    def __str__(self):
+        self.nombres
 
 class Servicio(models.Model):
     id_servicio = models.AutoField(primary_key=True)
